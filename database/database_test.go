@@ -26,7 +26,7 @@ var _ = Describe("Postgres\n", func() {
 	})
 	Context("When the connection string is valid\n", func() {
 		BeforeEach(func() {
-			conn = "user=root password=root dbname=testingwithrentals sslmode=disable connect_timeout=30 port=5434"
+			conn = "user=root password=root dbname=testingwithrentals sslmode=disable connect_timeout=30 port=5434 host=localhost"
 
 		})
 

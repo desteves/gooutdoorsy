@@ -14,7 +14,7 @@ var _ = Describe("OutdoorsyRV\n", func() {
 		var connection string
 
 		BeforeEach(func() {
-			connection = "user=root password=root dbname=testingwithrentals sslmode=disable connect_timeout=30 port=5434"
+			connection = "user=root password=root dbname=testingwithrentals sslmode=disable connect_timeout=30 port=5434 host=localhost"
 		})
 		It("should create a new outdoorsy", func() {
 			o, err := NewOutdoorsyProvider(connection)

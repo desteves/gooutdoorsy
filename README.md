@@ -1,3 +1,64 @@
+
+# To Run
+- In one terminal run: `docker-compose up`
+- In another termian: Use `curl` or Postman or something similar to hit the endpoints :
+  `localhost:8081/rentals/{id}`
+  `localhost:8081/rentals[?OptionalFilters]`
+  - Examples with curl and jq
+    ```bash
+    curl "localhost:8081/rentals/3" | jq .
+    curl "localhost:8081/rentals?price_min=9000&price_max=75000" | jq .
+    curl "localhost:8081/rentals?limit=3&offset=6" | jq .
+    curl "localhost:8081/rentals?ids=3,4,5" | jq .
+    curl "localhost:8081/rentals?near=33.64,-117.93" | jq .
+    curl "localhost:8081/rentals?sort=price" | jq .
+    curl "localhost:8081/rentals?near=33.64,-117.93&price_min=9000&price_max=75000&limit=3&offset=6&sort=price" | jq .
+    ```
+
+# Test
+
+The tests make heavy use of the `ginkgo` package.
+
+- Set up postgres db with the provided data
+  ```bash
+  cd test/data
+  docker-compose up
+  ```
+- Run ALL tests in another terminal
+  ```bash
+  # from the root project directory run:
+  go test ./....
+  ```
+- To run package-specific tests:
+  - `cd` to package and run `ginkgo test .`
+  - Example:
+    ```bash
+    cd database 
+    ginkgo test .
+    ```
+
+
+
+# Future features/changes
+
+- Reach 100% code coverage. Currently:
+  ```bash
+  gooutdoorsy git:(master) go test --cover ./...
+  ?       github.com/desteves/gooutdoorsy [no test files]
+  ok      api       coverage: 76.6% of statements
+  ok      database  coverage: 78.6% of statements
+  ok      rental    coverage: 38.9% of statements
+  ```
+- Add versioning to the api `/v0/`
+- Security (ssl, pwd files)
+- Logging everywhere and generate docs
+- Test ALL the filter parameters
+- Fix bug with the `near` filter
+
+
+----
+
+
 # Coding Challenge
 
 Thanks for applying for a backend role at Outdoorsy. We've put together this code challenge, which should take around 3-4 hours to complete.
