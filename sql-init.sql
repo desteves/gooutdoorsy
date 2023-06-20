@@ -68,3 +68,19 @@ VALUES
 (3, E'sCAMPer X',E'camper-van',E'ac tellus phasellus ultrices nostra eros aenean metus ridiculus adipiscing habitant nulla cubilia tortor rhoncus quisque sem ultrices varius massa mollis congue praesent nam ante',4,17500,E'Atlanta',E'GA',E'30310',E'US',E'Ram',E'Promaster',2020,19,E'2021-11-29 22:42:06.478595+00',E'2021-11-29 22:42:06.478595+00',33.73,-84.41,E'https://res.cloudinary.com/outdoorsy/image/upload/v1589910541/p/rentals/156152/images/jvyvtqoeljadoizjjzag.jpg'),
 (4, E'2015 Dodge Sprinter Van',E'camper-van',E'pretium non litora lobortis pharetra elit sociosqu platea nostra interdum odio vestibulum tincidunt mi blandit convallis pellentesque tempor viverra fermentum ultricies nunc egestas id arcu',2,17000,E'Silverthorne',E'CO',E'80498',E'US',E'Dodge',E'Sprinter Van',2015,20,E'2021-11-29 22:42:06.478595+00',E'2021-11-29 22:42:06.478595+00',39.62,-106.09,E'https://res.cloudinary.com/outdoorsy/image/upload/v1588550855/p/rentals/162781/images/az0xp8wbdto4pjzlkyh3.jpg'),
 (5, E'The New Adventures of Pearl - 2014 Nissan NV2500 High Top',E'camper-van',E'malesuada eget conubia porta sollicitudin urna ad aenean lacus vulputate parturient vulputate suspendisse sit parturient ante mauris maecenas dignissim donec eget adipiscing dui luctus eget',2,18900,E'Denver',E'CO',E'80222',E'US',E'Nissan',E'NV2500',2014,20,E'2021-11-29 22:42:06.478595+00',E'2021-11-29 22:42:06.478595+00',39.67,-104.92,E'https://res.cloudinary.com/outdoorsy/image/upload/v1590500837/undefined/rentals/164961/images/t3nkxdl0ua8g6gp1idcm.jpg');
+
+
+
+
+-- user id must exist -> innter join
+CREATE VIEW rental_v AS
+  SELECT rentals.id AS id, name, description, type, vehicle_make, vehicle_model, vehicle_year, vehicle_length, sleeps, primary_image_url, price_per_day, home_city, home_state, home_zip, home_country, lat, lng, users.id AS user_id, users.first_name AS first_name, users.last_name AS last_name
+  FROM rentals
+  INNER JOIN users
+  ON rentals.user_id = users.id;
+
+
+CREATE EXTENSION IF NOT EXISTS cube;
+CREATE EXTENSION IF NOT EXISTS earthdistance;
+CREATE INDEX IF NOT EXISTS rental_loc_idx ON rentals USING gist (ll_to_earth(lat, lng));
+
